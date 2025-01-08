@@ -1,0 +1,7 @@
+.error{
+    color: red;
+}
+.readonly-field {
+    background-color: #d40707;
+    pointer-events: none;  /* Optional: Disable mouse interaction */
+  }

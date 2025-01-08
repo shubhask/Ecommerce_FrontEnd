@@ -1,0 +1,34 @@
+import axios from "axios";
+import { json } from "react-router-dom";
+export default async function categoryLoader(token){
+
+    const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        },
+      };
+
+    try{
+        const response = await axios
+        .get('http://shubhask-d4c00j3:8080/api/v1/catalog/categories', config)
+        
+        // Handle a successful response here (e.g., show a success message)
+        console.log('Categories are', response.data);
+        
+        if(response.status !== 200){
+            throw json({message: 'could not get the categories'}, {status: 500});
+        }
+        return response.data;
+    } catch(error){
+        let errorMessage = 'An error occurred while retrieving categories.';
+
+        if (error.response && error.response.status === 401) {
+            errorMessage = 'Bad credentials. Please try again.';
+        } else {
+            errorMessage = 'Unknown error. Please try again later.';
+        }
+
+        return errorMessage;
+    }
+}
